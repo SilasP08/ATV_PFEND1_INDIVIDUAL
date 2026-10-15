@@ -1,0 +1,37 @@
+:root {
+  --preto: #0B0B0D;
+  --amarelo: #FFD000;
+
+  --cinza-escuro: #1C1C21;
+  --cinza-medio: #A3A3A3;
+  --branco: #F5F5F5;
+
+  --amarelo-hover: #E6BB00;
+  --borda: #333338;
+
+
+  --raio-card: 12px;
+  --transicao: 0.3s ease;
+}
+
+
+header {
+  background-color: #0B0B0D;
+  padding: 15px 5%;
+  border-bottom: 2px solid #FFD000;
+}
+
+header .nav-link {
+  color: #F5F5F5;
+  transition: 0.3s ease;
+}
+
+header .nav-link:hover {
+  color: #FFD000;
+}
+
+header .nav-underline .nav-link.active {
+  color: #FFD000;
+  border-bottom-color: #FFD000;
+}
+
