@@ -1,5 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Header from "../components/header";
+import Footer from "../components/footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const geistSans = Geist({
@@ -21,177 +23,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
-        <header>
-          <div class="nav-overflow" data-bs-toggle="nav-overflow">
-            <ul class="nav nav-underline">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">FAQs</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Contact</a>
-              </li>
-            </ul>
-          </div>
-        </header>
+        <Header/>
         {children}
 
-        <footer class="footer">
-          <div class="footer-main">
-
-            <div class="footer-about">
-              <a href="index.php" class="logo-footer">
-                ELETRO<span>TECH</span>
-              </a>
-
-              <p class="slogan-footer">
-                Tecnologia, inovação e qualidade
-                <br/>
-                  para seus projetos.
-              </p>
-
-              <div class="footer-line"></div>
-
-              <p class="txt-footer">
-                Encontre componentes eletrônicos,
-                ferramentas e acessórios para transformar
-                suas ideias em realidade.
-              </p>
-            </div>
-
-            <div class="footer-column">
-              <h2>NAVEGAÇÃO</h2>
-              <div class="footer-title-line"></div>
-
-              <ul class="footer-links">
-                <li>
-                  <a href="index.php">
-                    <i class="bi bi-house-door"></i>
-                    Início
-                  </a>
-                </li>
-
-                <li>
-                  <a href="produtos.php">
-                    <i class="bi bi-cpu"></i>
-                    Produtos
-                  </a>
-                </li>
-
-                <li>
-                  <a href="categorias.php">
-                    <i class="bi bi-grid"></i>
-                    Categorias
-                  </a>
-                </li>
-
-                <li>
-                  <a href="ofertas.php">
-                    <i class="bi bi-tag"></i>
-                    Ofertas
-                  </a>
-                </li>
-
-                <li>
-                  <a href="minha-conta.php">
-                    <i class="bi bi-person"></i>
-                    Minha conta
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div class="footer-column">
-              <h2>ATENDIMENTO</h2>
-              <div class="footer-title-line"></div>
-
-              <div class="footer-info">
-                <div class="info-item">
-                  <i class="bi bi-telephone-fill"></i>
-                  <span>(11) 93056-9806</span>
-                </div>
-
-                <div class="info-item">
-                  <i class="bi bi-envelope-fill"></i>
-                  <span>contato@eletrotech.com.br</span>
-                </div>
-
-                <div class="info-item">
-                  <i class="bi bi-geo-alt-fill"></i>
-                  <span>São Paulo - SP, Brasil</span>
-                </div>
-
-                <div class="info-item">
-                  <i class="bi bi-clock-fill"></i>
-                  <span>
-                    Segunda a sexta
-                    <br/>
-                      Das 8h às 18h
-                  </span>
-                </div>
-              </div>
-
-              <a href="contato.php" class="footer-contact-btn">
-                <i class="bi bi-chat-dots"></i>
-                Entre em contato
-              </a>
-            </div>
-
-            <div class="footer-column">
-              <h2>SIGA-NOS</h2>
-              <div class="footer-title-line"></div>
-
-              <p class="social-description">
-                Acompanhe nossas novidades,
-                lançamentos e ofertas.
-              </p>
-
-              <div class="social-list">
-                <a href="#" aria-label="Instagram">
-                  <i class="bi bi-instagram"></i>
-                  <span>Instagram</span>
-                </a>
-
-                <a href="#" aria-label="Facebook">
-                  <i class="bi bi-facebook"></i>
-                  <span>Facebook</span>
-                </a>
-
-                <a href="#" aria-label="WhatsApp">
-                  <i class="bi bi-whatsapp"></i>
-                  <span>WhatsApp</span>
-                </a>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="footer-bottom">
-            <div class="footer-bottom-line"></div>
-
-            <p>
-              &copy; 2026 EletroTech.
-              Todos os direitos reservados.
-            </p>
-
-            <div class="footer-bottom-icons">
-              <i class="bi bi-cpu"></i>
-              <span>TECNOLOGIA QUE CONECTA</span>
-              <i class="bi bi-lightning-charge-fill"></i>
-            </div>
-          </div>
-        </footer>
+       <Footer/>
 
       </body>
     </html>
