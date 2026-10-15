@@ -1,37 +1,125 @@
 :root {
-  --preto: #0B0B0D;
-  --amarelo: #FFD000;
+    --preto: #0B0B0D;
+    --amarelo: #FFD000;
 
-  --cinza-escuro: #1C1C21;
-  --cinza-medio: #A3A3A3;
-  --branco: #F5F5F5;
+    --cinza-escuro: #1C1C21;
+    --cinza-medio: #A3A3A3;
+    --branco: #F5F5F5;
 
-  --amarelo-hover: #E6BB00;
-  --borda: #333338;
+    --amarelo-hover: #E6BB00;
+    --borda: #333338;
 
 
-  --raio-card: 12px;
-  --transicao: 0.3s ease;
+    --raio-card: 12px;
+    --transicao: 0.3s ease;
 }
 
-
-header {
-  background-color: #0B0B0D;
-  padding: 15px 5%;
-  border-bottom: 2px solid #FFD000;
+.header-house {
+    width: 100%;
+    background-color: var(--preto);
+    border-bottom: 2px solid var(--amarelo);
+    padding: 10px 4%;
+    position: relative;
+    z-index: 1000;
 }
 
-header .nav-link {
-  color: #F5F5F5;
-  transition: 0.3s ease;
+.header-container {
+    max-width: 1400px;
+    min-height: 75px;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
 }
 
-header .nav-link:hover {
-  color: #FFD000;
+.logo-house {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
 }
 
-header .nav-underline .nav-link.active {
-  color: #FFD000;
-  border-bottom-color: #FFD000;
+.logo-house img {
+    display: block;
+    width: 175px;
+    height: auto;
+    object-fit: contain;
 }
 
+.nav-overflow {
+    flex: 1;
+}
+
+.nav-overflow .nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.header-house .nav-link {
+    color: var(--branco) !important;
+    padding: 10px 12px;
+    border-bottom: 2px solid transparent;
+    transition: var(--transicao);
+    white-space: nowrap;
+}
+
+.header-house .nav-link:hover,
+.header-house .nav-link.active {
+    color: var(--amarelo) !important;
+}
+
+.header-house .nav-underline .nav-link.active,
+.header-house .nav-underline .nav-link:hover {
+    border-bottom-color: var(--amarelo);
+}
+
+.header-auth {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.btn-login,
+.btn-cadastro {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 10px 17px;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+
+    transition: var(--transicao);
+}
+
+.btn-login {
+    color: var(--amarelo);
+    background-color: transparent;
+    border: 1px solid var(--amarelo);
+}
+
+.btn-login:hover {
+    color: var(--preto);
+    background-color: var(--amarelo);
+}
+
+.btn-cadastro {
+    color: var(--preto);
+    background-color: var(--amarelo);
+    border: 1px solid var(--amarelo);
+}
+
+.btn-cadastro:hover {
+    color: var(--preto);
+    background-color: var(--amarelo-hover);
+    border-color: var(--amarelo-hover);
+    transform: translateY(-2px);
+}
