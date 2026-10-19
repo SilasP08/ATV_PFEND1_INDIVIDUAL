@@ -145,3 +145,112 @@
 .header-carrinho:hover {
     color: var(--amarelo) !important;
 }
+
+
+/* CONTAINER DO PERFIL */
+.perfil-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* BOTÃO DA FOTO */
+.perfil-botao {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--cinza-escuro);
+    border: 2px solid var(--amarelo);
+    border-radius: 50%;
+
+    overflow: hidden;
+    cursor: pointer;
+    flex-shrink: 0;
+
+    transition: var(--transicao);
+}
+
+.perfil-botao:hover {
+    transform: scale(1.06);
+    box-shadow: 0 0 12px #FFD00055;
+}
+
+/* FOTO */
+.perfil-foto {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ÍCONE CASO NÃO TENHA FOTO */
+.perfil-icone {
+    color: var(--amarelo);
+    font-size: 25px;
+}
+
+/* MENU SUSPENSO */
+.perfil-menu {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+
+    width: 180px;
+    padding: 8px;
+
+    background-color: var(--cinza-escuro);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio-card);
+
+    box-shadow: 0 8px 24px #00000055;
+    z-index: 1100;
+
+    animation: aparecer-menu 0.2s ease;
+}
+
+/* BOTÃO SAIR */
+.perfil-logout {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 11px 12px;
+
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+
+    color: var(--branco);
+    font-size: 14px;
+    text-align: left;
+
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+.perfil-logout i {
+    color: var(--amarelo);
+    font-size: 18px;
+}
+
+.perfil-logout:hover {
+    background-color: #ffffff0d;
+    color: var(--amarelo);
+}
+
+/* ANIMAÇÃO */
+@keyframes aparecer-menu {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
