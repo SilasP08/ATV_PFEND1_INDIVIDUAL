@@ -4,8 +4,10 @@ import './header.css';
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
+    const pathname = usePathname();
     return (
         <header className="header-house">
             <div className="header-container">
@@ -17,13 +19,13 @@ export default function Header() {
                 <nav className="nav-overflow">
                     <ul className="nav nav-underline">
                         <li className="nav-item">
-                            <Link className="nav-link active" aria-current="page" href="/">
+                            <Link className={`nav-link ${pathname === "/" ? "active" : ""}`} aria-current="page" href="/">
                                 Home
                             </Link>
                         </li>
 
                         <li className="nav-item">
-                            <Link className="nav-link" href="/produtos">
+                            <Link className={`nav-link ${pathname === "/produtos" ? "active" : ""}`} href="/produtos">
                                 Produtos
                             </Link>
                         </li>

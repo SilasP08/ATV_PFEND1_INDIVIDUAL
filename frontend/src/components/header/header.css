@@ -58,17 +58,21 @@
     gap: 30px;
 }
 
-.header-house .nav-link {
-    color: var(--branco) !important;
+.header-house .nav-overflow .nav .nav-link {
+    color: var(--branco);
     padding: 10px 12px;
     border-bottom: 2px solid transparent;
     transition: var(--transicao);
     white-space: nowrap;
 }
 
-.header-house .nav-link:hover,
-.header-house .nav-link.active {
-    color: var(--amarelo) !important;
+.header-house .nav-overflow .nav .nav-link:hover,
+.header-house .nav-overflow .nav .nav-link.active {
+    color: var(--amarelo);
+}
+
+.header-house .nav-overflow .nav .nav-link.active:hover {
+    color: var(--amarelo);
 }
 
 .header-house .nav-underline .nav-link.active,
