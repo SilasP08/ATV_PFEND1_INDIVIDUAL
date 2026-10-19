@@ -32,13 +32,6 @@ const produtosIniciais = [
     },
 ];
 
-function formatarPreco(valor) {
-    return valor.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-    });
-}
-
 export default function Carrinho() {
     const [produtos, setProdutos] = useState(produtosIniciais);
 
@@ -60,13 +53,7 @@ export default function Carrinho() {
         setProdutos((listaAtual) =>
             listaAtual.map((produto) =>
                 produto.id === id
-                    ? {
-                        ...produto,
-                        quantidade: Math.max(
-                            1,
-                            produto.quantidade + variacao
-                        ),
-                    }
+                    ? {...produto, quantidade: Math.max(1, produto.quantidade + variacao)}
                     : produto
             )
         );
