@@ -1,0 +1,355 @@
+
+.pagina-pagamento {
+    min-height: 80vh;
+    padding: 45px 5% 70px;
+    background-color: var(--preto);
+    color: var(--branco);
+}
+
+.pagamento-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.pagamento-titulo {
+    margin-bottom: 35px;
+}
+
+.voltar-carrinho {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 25px;
+    color: var(--cinza-medio);
+    text-decoration: none;
+    transition: var(--transicao);
+}
+
+.voltar-carrinho:hover {
+    color: var(--amarelo);
+}
+
+.pagamento-titulo h1 {
+    margin-bottom: 10px;
+    font-size: clamp(28px, 4vw, 38px);
+    font-weight: 800;
+}
+
+.pagamento-titulo h1 span {
+    color: var(--amarelo);
+}
+
+.pagamento-titulo p {
+    color: var(--cinza-medio);
+}
+
+.pagamento-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(300px, 0.9fr);
+    gap: 28px;
+    align-items: start;
+}
+
+.pagamento-dados {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.pagamento-card,
+.resumo-pagamento {
+    padding: 26px;
+    background-color: var(--cinza-escuro);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio-card);
+}
+
+.pagamento-card h2,
+.resumo-pagamento h2 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.pagamento-card h2 i {
+    color: var(--amarelo);
+    font-size: 22px;
+}
+
+.pagamento-campos {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.campo-pagamento {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+}
+
+.campo-pagamento label {
+    color: var(--branco);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.campo-pagamento input {
+    width: 100%;
+    min-height: 46px;
+    padding: 12px 14px;
+    background-color: var(--preto);
+    color: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    outline: none;
+    transition: var(--transicao);
+}
+
+.campo-pagamento input::placeholder {
+    color: #77777F;
+}
+
+.campo-pagamento input:focus {
+    border-color: var(--amarelo);
+    box-shadow: 0 0 0 3px #FFD00020;
+}
+
+.campos-duplos {
+    display: flex;
+    gap: 16px;
+}
+
+/* FORMAS DE PAGAMENTO */
+.opcoes-pagamento {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.opcao-pagamento {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 16px;
+    background-color: var(--preto);
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+.opcao-pagamento > input {
+    accent-color: var(--amarelo);
+    flex-shrink: 0;
+}
+
+.opcao-pagamento > i:first-of-type {
+    color: var(--amarelo);
+    font-size: 24px;
+}
+
+.opcao-pagamento span {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+}
+
+.opcao-pagamento strong {
+    font-size: 14px;
+}
+
+.opcao-pagamento small {
+    color: var(--cinza-medio);
+    font-size: 12px;
+}
+
+.opcao-pagamento .icone-selecao {
+    color: var(--amarelo);
+    opacity: 0;
+}
+
+.opcao-pagamento.selecionado {
+    border-color: var(--amarelo);
+    background-color: #FFD0000A;
+}
+
+.opcao-pagamento.selecionado .icone-selecao {
+    opacity: 1;
+}
+
+.aviso-pagamento {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 18px;
+    padding: 14px;
+    background-color: #FFD0000A;
+    border: 1px solid #FFD00030;
+    border-radius: 8px;
+    color: var(--cinza-medio);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.aviso-pagamento i {
+    color: var(--amarelo);
+    font-size: 17px;
+}
+
+/* RESUMO */
+.resumo-pagamento {
+    position: sticky;
+    top: 25px;
+}
+
+.resumo-pagamento h2 {
+    margin-bottom: 22px;
+}
+
+.resumo-produtos {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.produto-resumo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.produto-resumo-icone {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background-color: var(--preto);
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    color: var(--amarelo);
+    font-size: 21px;
+}
+
+.produto-resumo-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+    min-width: 0;
+}
+
+.produto-resumo-info strong {
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.produto-resumo-info span {
+    color: var(--cinza-medio);
+    font-size: 12px;
+}
+
+.produto-resumo-preco {
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.resumo-linha {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 17px;
+    color: var(--cinza-medio);
+    font-size: 14px;
+}
+
+.resumo-linha span:last-child {
+    color: var(--branco);
+}
+
+.resumo-linha .frete-gratis {
+    color: #36BF66;
+}
+
+.resumo-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-top: 22px;
+    padding-top: 22px;
+    border-top: 1px solid var(--borda);
+}
+
+.resumo-total span {
+    font-weight: 600;
+}
+
+.resumo-total strong {
+    color: var(--amarelo);
+    font-size: 24px;
+    white-space: nowrap;
+}
+
+.btn-finalizar-pagamento {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 25px;
+    padding: 15px;
+    background-color: var(--amarelo);
+    color: var(--preto);
+    border: 1px solid var(--amarelo);
+    border-radius: 8px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+.btn-finalizar-pagamento:hover {
+    background-color: var(--amarelo-hover);
+    border-color: var(--amarelo-hover);
+    transform: translateY(-2px);
+}
+
+.pagamento-seguro {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+    margin: 18px 0;
+    color: var(--cinza-medio);
+    font-size: 11px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.pagamento-seguro i {
+    color: var(--amarelo);
+    font-size: 15px;
+}
+
+.continuar-comprando {
+    display: block;
+    color: var(--cinza-medio);
+    font-size: 13px;
+    text-align: center;
+    text-decoration: none;
+    transition: var(--transicao);
+}
+
+.continuar-comprando:hover {
+    color: var(--amarelo);
+}
