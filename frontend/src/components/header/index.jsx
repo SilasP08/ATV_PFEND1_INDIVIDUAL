@@ -5,6 +5,7 @@ import './header.css';
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 export default function Header() {
     const pathname = usePathname();
@@ -35,11 +36,17 @@ export default function Header() {
                                 Sobre
                             </Link>
                         </li>
+
                     </ul>
                 </nav>
 
                 {/* BOTÕES DE AUTENTICAÇÃO */}
                 <div className="header-auth">
+                    <li className="nav-item">
+                        <Link href="/carrinho" className="nav-link header-carrinho">
+                            <i className="bi bi-cart3" aria-hidden="true"></i>
+                        </Link>
+                    </li>
                     <Link href="/login" className="btn-login">
                         Entrar
                     </Link>

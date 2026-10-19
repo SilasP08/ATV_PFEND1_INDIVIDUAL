@@ -83,8 +83,8 @@
 .header-auth {
     display: flex;
     align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
+    gap: 12px;
+    margin-left: auto;
 }
 
 .btn-login,
@@ -126,4 +126,22 @@
     background-color: var(--amarelo-hover);
     border-color: var(--amarelo-hover);
     transform: translateY(-2px);
+}
+
+.header-carrinho {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 20px;
+    color: var(--branco) !important;
+    transition: var(--transicao);
+}
+
+.header-carrinho i {
+    font-size: 20px;
+    color: var(--amarelo);
+}
+
+.header-carrinho:hover {
+    color: var(--amarelo) !important;
 }
