@@ -1,0 +1,293 @@
+
+.auth-page {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--preto);
+    color: var(--branco);
+}
+
+/* Lado de apresentação */
+
+.auth-brand {
+    min-height: 100vh;
+    padding: 45px 9%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            circle at 80% 70%,
+            rgba(255, 208, 0, 0.12),
+            transparent 35%
+        ),
+        var(--cinza-escuro);
+    border-right: 1px solid var(--borda);
+}
+
+.auth-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    width: fit-content;
+    color: var(--branco);
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.auth-logo strong {
+    color: var(--amarelo);
+}
+
+.logo-bolt {
+    color: var(--amarelo);
+    font-size: 25px;
+}
+
+.brand-content {
+    max-width: 520px;
+    margin: 60px auto;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.brand-tag,
+.form-eyebrow {
+    color: var(--amarelo);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.brand-content h1 {
+    margin: 24px 0;
+    font-size: clamp(36px, 4vw, 58px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -2px;
+}
+
+.brand-content h1 span {
+    display: block;
+    color: var(--amarelo);
+}
+
+.brand-content p {
+    max-width: 390px;
+    color: var(--cinza-medio);
+    line-height: 1.8;
+    font-size: 15px;
+}
+
+.brand-decoration {
+    display: flex;
+    gap: 8px;
+    margin-top: 38px;
+}
+
+.brand-decoration span {
+    height: 5px;
+    width: 35px;
+    border-radius: 10px;
+    background: var(--borda);
+}
+
+.brand-decoration span:first-child {
+    width: 65px;
+    background: var(--amarelo);
+}
+
+.brand-footer {
+    color: var(--cinza-medio);
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+/* Lado do formulário */
+
+.auth-form-area {
+    min-height: 100vh;
+    padding: 40px 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-form-container {
+    width: 100%;
+    max-width: 410px;
+}
+
+.auth-mobile-logo {
+    display: none;
+    margin-bottom: 45px;
+}
+
+.auth-heading {
+    margin-bottom: 35px;
+}
+
+.auth-heading h2 {
+    margin: 13px 0 10px;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.auth-heading p {
+    color: var(--cinza-medio);
+    font-size: 14px;
+}
+
+.form-group-custom {
+    margin-bottom: 23px;
+}
+
+.form-group-custom label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.form-group-custom .form-control {
+    min-height: 52px;
+    padding: 13px 15px;
+    color: var(--branco);
+    background: var(--cinza-escuro);
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    font-size: 14px;
+    transition: var(--transicao);
+}
+
+.form-group-custom .form-control::placeholder {
+    color: #777780;
+}
+
+.form-group-custom .form-control:focus {
+    color: var(--branco);
+    background: var(--cinza-escuro);
+    border-color: var(--amarelo);
+    box-shadow: 0 0 0 3px rgba(255, 208, 0, 0.1);
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper .form-control {
+    padding-right: 85px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: var(--amarelo);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.auth-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin: 5px 0 28px;
+    font-size: 12px;
+}
+
+.remember-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--cinza-medio);
+}
+
+.remember-option input {
+    accent-color: var(--amarelo);
+}
+
+.auth-options a,
+.auth-switch a,
+.auth-legal a {
+    color: var(--amarelo);
+    text-decoration: none;
+}
+
+.auth-options a:hover,
+.auth-switch a:hover,
+.auth-legal a:hover {
+    color: var(--amarelo-hover);
+    text-decoration: underline;
+}
+
+.auth-submit {
+    width: 100%;
+    min-height: 52px;
+    padding: 13px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    border-radius: 8px;
+    background: var(--amarelo);
+    color: var(--preto);
+    font-weight: 800;
+    font-size: 14px;
+    cursor: pointer;
+    transition: var(--transicao);
+}
+
+.auth-submit:hover {
+    background: var(--amarelo-hover);
+    transform: translateY(-2px);
+}
+
+.auth-submit span {
+    font-size: 22px;
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 30px 0;
+    color: var(--cinza-medio);
+    font-size: 10px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--borda);
+}
+
+.auth-switch {
+    text-align: center;
+    color: var(--cinza-medio);
+    font-size: 13px;
+}
+
+.auth-switch a {
+    font-weight: 700;
+}
+
+.auth-legal {
+    margin-top: 40px;
+    color: var(--cinza-medio);
+    font-size: 10px;
+    line-height: 1.8;
+    text-align: center;
+}
