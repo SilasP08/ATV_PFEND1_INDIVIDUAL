@@ -31,20 +31,8 @@ export default function Header() {
                         </li>
 
                         <li className="nav-item">
-                            <Link className="nav-link" href="/categorias">
-                                Categorias
-                            </Link>
-                        </li>
-
-                        <li className="nav-item">
-                            <Link className="nav-link" href="/ofertas">
-                                Ofertas
-                            </Link>
-                        </li>
-
-                        <li className="nav-item">
-                            <Link className="nav-link" href="/contato">
-                                Contato
+                            <Link className="nav-link" href="/sobre">
+                                Sobre
                             </Link>
                         </li>
                     </ul>

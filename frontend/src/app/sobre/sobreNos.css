@@ -1,0 +1,321 @@
+
+/* Página Sobre Nós */
+
+.sobre-page {
+    overflow: hidden;
+    background: var(--preto);
+    color: var(--branco);
+}
+
+/* Banner principal */
+
+.sobre-hero {
+    min-height: 520px;
+    padding: 100px 0;
+    display: flex;
+    align-items: center;
+    position: relative;
+    background:
+        radial-gradient(
+            circle at 85% 50%,
+            rgba(255, 208, 0, 0.12),
+            transparent 30%
+        ),
+        var(--preto);
+    border-bottom: 1px solid var(--borda);
+}
+
+.sobre-hero .container {
+    position: relative;
+    z-index: 1;
+}
+
+.sobre-tag,
+.sobre-subtitle {
+    color: var(--amarelo);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.sobre-hero h1 {
+    max-width: 800px;
+    margin: 25px 0;
+    font-size: clamp(42px, 6vw, 72px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -2px;
+}
+
+.sobre-hero h1 span,
+.sobre-historia h2 span,
+.sobre-section-heading h2 span,
+.sobre-cta h2 span {
+    color: var(--amarelo);
+}
+
+.sobre-hero p {
+    max-width: 570px;
+    margin-bottom: 30px;
+    color: var(--cinza-medio);
+    font-size: 16px;
+    line-height: 1.9;
+}
+
+.sobre-btn {
+    min-height: 50px;
+    padding: 14px 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    border-radius: 8px;
+    background: var(--amarelo);
+    color: var(--preto);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 800;
+    transition: var(--transicao);
+}
+
+.sobre-btn:hover {
+    background: var(--amarelo-hover);
+    color: var(--preto);
+    transform: translateY(-3px);
+}
+
+.sobre-btn span {
+    font-size: 21px;
+}
+
+/* Decoração do banner */
+
+.sobre-hero-decoration {
+    width: 240px;
+    height: 240px;
+    position: absolute;
+    right: 8%;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid rgba(255, 208, 0, 0.15);
+    border-radius: 50%;
+}
+
+.sobre-hero-decoration::before,
+.sobre-hero-decoration::after {
+    content: "";
+    position: absolute;
+    border: 1px solid rgba(255, 208, 0, 0.2);
+    border-radius: 50%;
+}
+
+.sobre-hero-decoration::before {
+    inset: 25px;
+}
+
+.sobre-hero-decoration::after {
+    inset: 55px;
+    background: rgba(255, 208, 0, 0.04);
+}
+
+/* Nossa história */
+
+.sobre-historia {
+    padding: 100px 0;
+    background: var(--cinza-escuro);
+}
+
+.historia-visual {
+    min-height: 350px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio-card);
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 208, 0, 0.12),
+            transparent 55%
+        ),
+        var(--preto);
+    transition: var(--transicao);
+}
+
+.historia-visual:hover {
+    border-color: var(--amarelo);
+    transform: translateY(-5px);
+}
+
+.historia-icon {
+    color: var(--amarelo);
+    font-size: 110px;
+    line-height: 1;
+    text-shadow: 0 0 35px rgba(255, 208, 0, 0.25);
+}
+
+.historia-legenda {
+    color: var(--cinza-medio);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.sobre-historia h2 {
+    margin: 18px 0 25px;
+    font-size: clamp(30px, 4vw, 43px);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+.sobre-historia p {
+    color: var(--cinza-medio);
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+/* Títulos das seções */
+
+.sobre-section-heading {
+    max-width: 650px;
+    margin: 0 auto 55px;
+    text-align: center;
+}
+
+.sobre-section-heading h2 {
+    margin: 18px 0;
+    font-size: clamp(30px, 4vw, 43px);
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.sobre-section-heading > p {
+    color: var(--cinza-medio);
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+/* Missão, visão e valores */
+
+.sobre-valores {
+    padding: 100px 0;
+    background: var(--preto);
+}
+
+.valor-card {
+    height: 100%;
+    padding: 35px 28px;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio-card);
+    background: var(--cinza-escuro);
+    transition: var(--transicao);
+}
+
+.valor-card:hover {
+    border-color: var(--amarelo);
+    transform: translateY(-7px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+.valor-icon {
+    width: 55px;
+    height: 55px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: rgba(255, 208, 0, 0.1);
+    color: var(--amarelo);
+    font-size: 30px;
+}
+
+.valor-card h3 {
+    margin-bottom: 15px;
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.valor-card p {
+    margin: 0;
+    color: var(--cinza-medio);
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+/* Diferenciais */
+
+.sobre-diferenciais {
+    padding: 100px 0;
+    background: var(--cinza-escuro);
+}
+
+.diferencial-card {
+    height: 100%;
+    padding: 28px 22px;
+    border-top: 2px solid var(--borda);
+    transition: var(--transicao);
+}
+
+.diferencial-card:hover {
+    border-color: var(--amarelo);
+    transform: translateY(-5px);
+}
+
+.diferencial-card > span {
+    display: inline-block;
+    margin-bottom: 25px;
+    color: var(--amarelo);
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.diferencial-card h3 {
+    margin-bottom: 13px;
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.diferencial-card p {
+    margin: 0;
+    color: var(--cinza-medio);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+/* Chamada final */
+
+.sobre-cta {
+    padding: 100px 20px;
+    text-align: center;
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(255, 208, 0, 0.09),
+            transparent 65%
+        ),
+        var(--preto);
+    border-top: 1px solid var(--borda);
+}
+
+.sobre-cta h2 {
+    max-width: 700px;
+    margin: 20px auto;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+.sobre-cta p {
+    max-width: 550px;
+    margin: 0 auto 30px;
+    color: var(--cinza-medio);
+    font-size: 14px;
+    line-height: 1.9;
+}
