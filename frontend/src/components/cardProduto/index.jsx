@@ -20,14 +20,6 @@ export default function CardProduto({ produto }) {
                     height={260}
                     className="produto-card-foto"
                 />
-
-                <Link
-                    href={`/produtos/${produto.id}`}
-                    className="produto-card-visualizar"
-                    aria-label={`Ver detalhes de ${produto.nome}`}
-                >
-                    <i className="bi bi-eye" />
-                </Link>
             </div>
 
             <div className="produto-card-conteudo">
@@ -49,7 +41,7 @@ export default function CardProduto({ produto }) {
 
                     <Link
                         href={`/produtos/${produto.id}`}
-                        className="produto-card-botao"
+                        className="produto-card-comprar"
                         aria-label={`Ver produto ${produto.nome}`}
                     >
                         Comprar
