@@ -52,7 +52,7 @@ export default function CardProduto({ produto }) {
                         className="produto-card-botao"
                         aria-label={`Ver produto ${produto.nome}`}
                     >
-                        <i className="bi bi-arrow-up-right" />
+                        Comprar
                     </Link>
                 </div>
             </div>

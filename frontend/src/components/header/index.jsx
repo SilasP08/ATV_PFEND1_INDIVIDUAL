@@ -43,7 +43,7 @@ export default function Header() {
                         </li>
 
                         <li className="nav-item">
-                            <Link className="nav-link" href="/sobre">
+                            <Link className={`nav-link ${pathname === "/sobre" ? "active" : ""}`} href="/sobre">
                                 Sobre
                             </Link>
                         </li>
