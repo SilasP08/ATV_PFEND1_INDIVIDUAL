@@ -12,7 +12,7 @@ export const app = express();
 // 1. Defesas de Borda: Helmet e CORS
 app.use(helmet());
 
-const origensPermitidas = (process.env.CORS_ORIGENS || 'http://localhost:3000,http://localhost:5500')
+const origensPermitidas = (process.env.CORS_ORIGENS || 'http://localhost:3000,http://localhost:5500,http://localhost:3001')
   .split(',')
   .map(o => o.trim());
 
@@ -30,12 +30,12 @@ app.use(cors({
 app.use(express.json());
 app.use('/uploads', express.static(resolve('uploads')));
 
+app.use('/api/auth', authRouter);
 // 2. Injeção de Segurança nas Rotas de Produtos
 configurarSegurancaProdutos(autenticar, autorizarAdmin);
 
 // 3. Rotas da API
 app.get('/api/check', (_req, res) => res.status(200).json({ status: 'ok' }));
-app.use('/api/auth', authRouter);
 app.use('/api/produtos', produtoRouter);
 
 // 4. Fallback 404

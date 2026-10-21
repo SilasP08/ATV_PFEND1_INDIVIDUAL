@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -7,6 +6,28 @@ import "./login.css";
 
 export default function Login() {
     const [mostrarSenha, setMostrarSenha] = useState(false);
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+
+    function autenticar(event) {
+        event.preventDefault()
+
+        fetch('http://localhost:3001/api/auth/login', {
+            method: 'post',
+            headers: {
+                'Content-type': "application/json"
+            },
+            body: JSON.stringify({ email, senha })
+        }).then(res => {
+            //ir para a home
+            if(!res.ok) throw new Error("Não autorizado")
+            
+            console.log("PASSOU")
+        }).catch(error => {
+            //exibe uma mensagem de erro
+        })
+    }
+    
 
     return (
         <main className="auth-page">
@@ -27,7 +48,7 @@ export default function Login() {
 
                     <p>
                         Encontre os componentes eletrônicos ideais
-                        para transformar seus projetos em realidade.
+                        para transformar seus projetos em realidade.nhjkbhibhbnjiobniobhibiobioi
                     </p>
 
                     <div className="brand-decoration">
@@ -60,17 +81,20 @@ export default function Login() {
                         </p>
                     </div>
 
-                    <form className="auth-form">
+                    <form className="auth-form" onSubmit={autenticar}>
                         <div className="form-group-custom">
                             <label htmlFor="email">E-mail</label>
-                            <input type="email" id="email" className="form-control" placeholder="seuemail@exemplo.com" required/>
+                            <input type="email" id="email" className="form-control" placeholder="seuemail@exemplo.com" 
+                            value={email} onChange={(event) => setEmail(event.target.value)} required/>
                         </div>
 
                         <div className="form-group-custom">
                             <label htmlFor="senha">Senha</label>
 
                             <div className="password-wrapper">
-                                <input type={mostrarSenha ? "text" : "password"} id="senha" className="form-control" placeholder="Digite sua senha" required/>
+                                <input type={mostrarSenha ? "text" : "password"} id="senha" className="form-control" placeholder="Digite sua senha" 
+                                 value={senha} onChange={(event) => setSenha(event.target.value)}
+                                required/>
 
                                 <button type="button" className="password-toggle" onClick={() => setMostrarSenha(!mostrarSenha)} aria-label={ mostrarSenha ? "Ocultar senha" : "Mostrar senha"}>
                                     {mostrarSenha ? "Ocultar" : "Mostrar"}

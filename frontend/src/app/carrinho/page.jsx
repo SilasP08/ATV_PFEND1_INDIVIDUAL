@@ -68,6 +68,14 @@ export default function Carrinho() {
     function limparCarrinho() {
         setProdutos([]);
     }
+    
+    function formatarPreco(valor) {
+        return valor.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+        });
+    }
+    
 
     return (
         <main className="carrinho-page">

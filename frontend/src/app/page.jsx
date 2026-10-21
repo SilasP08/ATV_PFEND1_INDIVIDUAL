@@ -1,6 +1,8 @@
-
+'use client';
 import Link from "next/link";
 import Image from "next/image";
+import CardProduto from "@/components/cardProduto";
+import {useState, useEffect } from "react";
 
 const categorias = [
   {
@@ -61,6 +63,7 @@ const produtos = [
 ];
 
 export default function Home() {
+  const [listarProdutos, setListarProdutos] = useState([])
   return (
     <>
 
@@ -226,59 +229,17 @@ export default function Home() {
                 <i className="bi bi-arrow-right" />
               </Link>
             </div>
+            {listarProdutos.length > 0  &&
+              <div className="products-grid">
+                {listarProdutos.map((produtos) => (
+                  <CardProduto
+                    key={produtos.id}
+                    produto={produtos}
+                  />
+                ))}
+              </div>
+            }
 
-            <div className="products-grid">
-              {produtos.map((produto) => (
-                <article className="product-card" key={produto.nome}>
-                  <div className="product-image">
-                    {produto.etiqueta && (
-                      <span className="product-badge">
-                        {produto.etiqueta}
-                      </span>
-                    )}
-
-                    <Image
-                      src={produto.imagem}
-                      alt={produto.nome}
-                      width={300}
-                      height={260}
-                    />
-
-                    <Link
-                      href="/produtos"
-                      className="product-quick-link"
-                      aria-label={`Ver ${produto.nome}`}
-                    >
-                      <i className="bi bi-arrow-up-right" />
-                    </Link>
-                  </div>
-
-                  <div className="product-info">
-                    <span className="product-category">
-                      COMPONENTES ELETRÔNICOS
-                    </span>
-
-                    <h3>{produto.nome}</h3>
-                    <p>{produto.descricao}</p>
-
-                    <div className="product-bottom">
-                      <div className="product-price">
-                        <span>R$</span>
-                        <strong>{produto.preco}</strong>
-                      </div>
-
-                      <Link
-                        href="/produtos"
-                        className="product-add"
-                        aria-label={`Ver produto ${produto.nome}`}
-                      >
-                        <i className="bi bi-plus-lg" />
-                      </Link>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
           </div>
         </section>
 

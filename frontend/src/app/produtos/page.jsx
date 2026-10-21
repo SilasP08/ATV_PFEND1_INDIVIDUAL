@@ -1,86 +1,10 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CardProduto from "@/components/cardProduto";
 import "./produtos.css";
 
-const produtos = [
-    {
-        id: 1,
-        nome: "Arduino Uno R3",
-        descricao: "Placa de desenvolvimento para projetos eletrônicos.",
-        categoria: "Placas e módulos",
-        preco: "59,90",
-        precoValor: 59.90,
-        imagem: "/imagens/arduino-uno.png",
-        etiqueta: "MAIS VENDIDO",
-    },
-    {
-        id: 2,
-        nome: "ESP32 Wi-Fi Bluetooth",
-        descricao: "Módulo ideal para projetos de automação e IoT.",
-        categoria: "Placas e módulos",
-        preco: "39,90",
-        precoValor: 39.90,
-        imagem: "/imagens/esp32.png",
-        etiqueta: "DESTAQUE",
-    },
-    {
-        id: 3,
-        nome: "Sensor Ultrassônico",
-        descricao: "Sensor para medir distâncias em projetos eletrônicos.",
-        categoria: "Sensores",
-        preco: "18,90",
-        precoValor: 18.90,
-        imagem: "/imagens/sensor.png",
-    },
-    {
-        id: 4,
-        nome: "Kit de Resistores",
-        descricao: "Kit com resistores para diversos circuitos eletrônicos.",
-        categoria: "Componentes",
-        preco: "19,90",
-        precoValor: 19.90,
-        imagem: "/imagens/kit-resistores.png",
-    },
-    {
-        id: 5,
-        nome: "Multímetro Digital",
-        descricao: "Ferramenta para medições elétricas no dia a dia.",
-        categoria: "Ferramentas",
-        preco: "49,90",
-        precoValor: 49.90,
-        imagem: "/imagens/multimetro.png",
-    },
-    {
-        id: 6,
-        nome: "Módulo Eletrônico",
-        descricao: "Módulo para integrar novas funções aos seus projetos.",
-        categoria: "Componentes",
-        preco: "24,90",
-        precoValor: 24.90,
-        imagem: "/imagens/componentes.png",
-    },
-    {
-        id: 7,
-        nome: "Kit de Ferramentas",
-        descricao: "Conjunto de ferramentas para montagem e manutenção.",
-        categoria: "Ferramentas",
-        preco: "79,90",
-        precoValor: 79.90,
-        imagem: "/imagens/ferramentas.png",
-    },
-    {
-        id: 8,
-        nome: "Placa de Prototipagem",
-        descricao: "Monte e teste circuitos sem precisar soldar componentes.",
-        categoria: "Placas e módulos",
-        preco: "14,90",
-        precoValor: 14.90,
-        imagem: "/imagens/prototipagem.png",
-    },
-];
 
 const categorias = [
     "Todas",
@@ -91,15 +15,30 @@ const categorias = [
 ];
 
 export default function Produtos() {
+
+
+    const [produtos, setProdutos] = useState([]);
     const [pesquisa, setPesquisa] = useState("");
     const [categoriaSelecionada, setCategoriaSelecionada] = useState("Todas");
     const [ordenacao, setOrdenacao] = useState("padrao");
 
+    useEffect(() => {
+        fetch('http://localhost:3001/api/produtos?limit=10')
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                setProdutos(data.dados);
+            })
+
+    }, [])
+    
     const produtosFiltrados = produtos
         .filter((produto) => {
-            const correspondePesquisa = produto.nome
-                .toLowerCase()
-                .includes(pesquisa.toLowerCase());
+            const nome = (produto.nome ?? "").toLowerCase();
+
+            const correspondePesquisa = nome.includes(
+                pesquisa.toLowerCase()
+            );
 
             const correspondeCategoria =
                 categoriaSelecionada === "Todas" ||
@@ -108,19 +47,22 @@ export default function Produtos() {
             return correspondePesquisa && correspondeCategoria;
         })
         .sort((a, b) => {
+            const precoA = Number(a.preco);
+            const precoB = Number(b.preco);
+
             if (ordenacao === "menor-preco") {
-                return a.precoValor - b.precoValor;
+                return precoA - precoB;
             }
 
             if (ordenacao === "maior-preco") {
-                return b.precoValor - a.precoValor;
+                return precoB - precoA;
             }
 
             if (ordenacao === "nome") {
-                return a.nome.localeCompare(b.nome);
+                return (a.nome ?? "").localeCompare(b.nome ?? "");
             }
 
-            return a.id - b.id;
+            return Number(a.id) - Number(b.id);
         });
 
     return (
