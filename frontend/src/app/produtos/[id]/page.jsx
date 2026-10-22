@@ -9,49 +9,24 @@ import "./detalheProduto.css";
 
 // Produtos de exemplo.
 // Depois, podemos centralizar esses dados em um arquivo compartilhado.
-const produtos = [
-    {
-        id: 1,
-        nome: "Arduino Uno R3",
-        descricao:
-            "Placa de desenvolvimento ideal para projetos de eletrônica, automação e robótica. Permite conectar sensores, módulos e diversos componentes eletrônicos.",
-        categoria: "Placas de desenvolvimento",
-        preco: 59.90,
-        imagem: "/imagens/arduino-uno.png",
-        etiqueta: "Mais vendido",
-        especificacoes: [
-            { nome: "Modelo", valor: "Arduino Uno R3" },
-            { nome: "Microcontrolador", valor: "ATmega328P" },
-            { nome: "Conexão", valor: "USB" },
-            { nome: "Aplicação", valor: "Eletrônica e automação" },
-        ],
-    },
-    {
-        id: 2,
-        nome: "Módulo ESP32",
-        descricao:
-            "Módulo de desenvolvimento indicado para projetos de IoT, automação residencial e sistemas conectados. Possui recursos de comunicação sem fio.",
-        categoria: "Módulos eletrônicos",
-        preco: 39.90,
-        imagem: "/imagens/esp32.png",
-        etiqueta: "Destaque",
-        especificacoes: [
-            { nome: "Modelo", valor: "ESP32" },
-            { nome: "Conectividade", valor: "Wi-Fi e Bluetooth" },
-            { nome: "Aplicação", valor: "Internet das Coisas (IoT)" },
-            { nome: "Programação", valor: "Compatível com ferramentas de desenvolvimento" },
-        ],
-    },
-];
+
 
 export default function DetalheProduto() {
-    const params = useParams();
-    const id = Number(params.id);
 
-    const produto = produtos.find((item) => item.id === id);
 
+    const [produtos, setProdutos] = useState(null);
     const [quantidade, setQuantidade] = useState(1);
 
+    useEffect(() => {
+        const id = params?.id;
+        fetch(`http://localhost:3001/api/produtos/${id}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                setProdutos(data.dados);
+            })
+
+    }, [])
     if (!produto) {
         return (
             <main className="detalhe-pagina">

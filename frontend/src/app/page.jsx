@@ -2,68 +2,21 @@
 import Link from "next/link";
 import Image from "next/image";
 import CardProduto from "@/components/cardProduto";
-import {useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-const categorias = [
-  {
-    nome: "Placas e módulos",
-    descricao: "Dê vida aos seus projetos.",
-    imagem: "/imagens/arduino-uno.png",
-    link: "/categorias/placas",
-  },
-  {
-    nome: "Sensores",
-    descricao: "Precisão para cada aplicação.",
-    imagem: "/imagens/sensor.png",
-    link: "/categorias/sensores",
-  },
-  {
-    nome: "Componentes",
-    descricao: "Tudo para seus circuitos.",
-    imagem: "/imagens/componentes.png",
-    link: "/categorias/componentes",
-  },
-  {
-    nome: "Ferramentas",
-    descricao: "Equipamentos para montar e reparar.",
-    imagem: "/imagens/ferramentas.png",
-    link: "/categorias/ferramentas",
-  },
-];
-
-const produtos = [
-  {
-    nome: "Arduino Uno R3",
-    descricao: "Placa de desenvolvimento",
-    preco: "59,90",
-    imagem: "/imagens/arduino-uno.png",
-    etiqueta: "MAIS VENDIDO",
-  },
-  {
-    nome: "Módulo ESP32",
-    descricao: "Wi-Fi e Bluetooth integrados",
-    preco: "39,90",
-    imagem: "/imagens/esp32.png",
-    etiqueta: "DESTAQUE",
-  },
-  {
-    nome: "Kit de resistores",
-    descricao: "Kit para projetos eletrônicos",
-    preco: "19,90",
-    imagem: "/imagens/kit-resistores.png",
-    etiqueta: null,
-  },
-  {
-    nome: "Multímetro digital",
-    descricao: "Medição e diagnóstico",
-    preco: "49,90",
-    imagem: "/imagens/multimetro.png",
-    etiqueta: null,
-  },
-];
 
 export default function Home() {
   const [listarProdutos, setListarProdutos] = useState([])
+
+  useEffect(() => {
+    fetch('http://localhost:3001/api/produtos?limit=10')
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        setProdutos(data.dados);
+      })
+
+  }, [])
   return (
     <>
 
@@ -94,10 +47,6 @@ export default function Home() {
               <Link href="/produtos" className="btn-house-primary">
                 Explorar produtos
                 <i className="bi bi-arrow-up-right" />
-              </Link>
-
-              <Link href="/categorias" className="btn-house-secondary">
-                Ver categorias
               </Link>
             </div>
 
@@ -165,52 +114,6 @@ export default function Home() {
           </article>
         </section>
 
-        {/* CATEGORIAS */}
-        <section className="section-house">
-          <div className="section-heading">
-            <div>
-              <span className="section-overline">EXPLORE A LOJA</span>
-              <h2>Encontre sua <span>categoria.</span></h2>
-              <p>Os componentes certos para cada ideia.</p>
-            </div>
-
-            <Link href="/categorias" className="section-link">
-              Todas as categorias
-              <i className="bi bi-arrow-right" />
-            </Link>
-          </div>
-
-          <div className="categories-grid">
-            {categorias.map((categoria, index) => (
-              <Link
-                href={categoria.link}
-                className="category-card"
-                key={categoria.nome}
-                style={{ "--card-index": index }}
-              >
-                <div className="category-image">
-                  <Image
-                    src={categoria.imagem}
-                    alt={categoria.nome}
-                    width={300}
-                    height={220}
-                  />
-                </div>
-
-                <div className="category-info">
-                  <div>
-                    <h3>{categoria.nome}</h3>
-                    <p>{categoria.descricao}</p>
-                  </div>
-
-                  <span className="category-arrow">
-                    <i className="bi bi-arrow-up-right" />
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
 
         {/* PRODUTOS EM DESTAQUE */}
         <section className="featured-house">
@@ -229,7 +132,7 @@ export default function Home() {
                 <i className="bi bi-arrow-right" />
               </Link>
             </div>
-            {listarProdutos.length > 0  &&
+            {listarProdutos.length > 0 &&
               <div className="products-grid">
                 {listarProdutos.map((produtos) => (
                   <CardProduto
