@@ -18,7 +18,7 @@ export async function listar({ limite, offset }) {
 
 
   const [linhas] = await pool.query(
-    'SELECT * FROM produtos ORDER BY id LIMIT ? OFFSET ?',
+    'SELECT * FROM produtos ORDER BY id_produto LIMIT ? OFFSET ?',
     [limiteNum, offsetNum]
   );
 
@@ -35,7 +35,7 @@ export async function listar({ limite, offset }) {
 
 // 2. Busca por ID
 export async function buscarPorId(id) {
-  const [linhas] = await pool.query('SELECT * FROM produtos WHERE id = ?', [id]);
+  const [linhas] = await pool.query('SELECT * FROM produtos WHERE id_produto = ?', [id]);
   if (linhas.length === 0) return null;
   return hidratarProduto(linhas[0]);
 }
@@ -52,7 +52,7 @@ export async function criar(produto) {
 
 // 4. Atualização completa (PUT)
 export async function atualizar(id, produto) {
-  const sql = 'UPDATE produtos SET nome = ?, preco = ?, estoque = ?, categoria = ? WHERE id = ?';
+  const sql = 'UPDATE produtos SET nome = ?, preco = ?, estoque = ?, categoria = ? WHERE id_produto = ?';
   const valores = [produto.nome, produto.preco, produto.estoque, produto.categoria, id];
   const [resultado] = await pool.query(sql, valores);
   return resultado.affectedRows > 0;
@@ -61,7 +61,7 @@ export async function atualizar(id, produto) {
 
 // 5. Atualizar URL da imagem (PATCH)
 export async function atualizarImagem(id, imagemUrl) {
-  const sql = 'UPDATE produtos SET imagem_url = ? WHERE id = ?';
+  const sql = 'UPDATE produtos SET imagem = ? WHERE id_produto = ?';
   const [resultado] = await pool.query(sql, [imagemUrl, id]);
   return resultado.affectedRows > 0;
 }
@@ -69,6 +69,6 @@ export async function atualizarImagem(id, imagemUrl) {
 
 // 6. Remoção (DELETE)
 export async function excluir(id) {
-  const [resultado] = await pool.query('DELETE FROM produtos WHERE id = ?', [id]);
+  const [resultado] = await pool.query('DELETE FROM produtos WHERE id_produto = ?', [id]);
   return resultado.affectedRows > 0;
 }

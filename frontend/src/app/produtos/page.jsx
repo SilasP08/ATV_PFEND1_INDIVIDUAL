@@ -21,49 +21,63 @@ export default function Produtos() {
     const [pesquisa, setPesquisa] = useState("");
     const [categoriaSelecionada, setCategoriaSelecionada] = useState("Todas");
     const [ordenacao, setOrdenacao] = useState("padrao");
+    const [carregando, setCarregando] = useState(true);
+    const [erro, setErro] = useState("");
 
     useEffect(() => {
-        fetch('http://localhost:3001/api/produtos?limit=10')
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                setProdutos(data.dados);
-            })
+        const controlador = new AbortController();
 
-    }, [])
-    
-    const produtosFiltrados = produtos
-        .filter((produto) => {
-            const nome = (produto.nome ?? "").toLowerCase();
+        const temporizador = setTimeout(async () => {
+            try {
+                setCarregando(true);
+                setErro("");
 
-            const correspondePesquisa = nome.includes(
-                pesquisa.toLowerCase()
-            );
+                const parametros = new URLSearchParams();
 
-            const correspondeCategoria =
-                categoriaSelecionada === "Todas" ||
-                produto.categoria === categoriaSelecionada;
+                parametros.set("limit", "10");
 
-            return correspondePesquisa && correspondeCategoria;
-        })
-        .sort((a, b) => {
-            const precoA = Number(a.preco);
-            const precoB = Number(b.preco);
+                if (pesquisa.trim() !== "") {
+                    parametros.set("pesquisa", pesquisa.trim());
+                }
 
-            if (ordenacao === "menor-preco") {
-                return precoA - precoB;
+                if (categoriaSelecionada !== "Todas") {
+                    parametros.set("categoria", categoriaSelecionada);
+                }
+
+                if (ordenacao !== "padrao") {
+                    parametros.set("ordenacao", ordenacao);
+                }
+
+                const resposta = await fetch(
+                    `http://localhost:3001/api/produtos?${parametros.toString()}`,
+                    { signal: controlador.signal }
+                );
+
+                if (!resposta.ok) {
+                    throw new Error("Não foi possível buscar os produtos.");
+                }
+
+                const data = await resposta.json();
+
+                setProdutos(Array.isArray(data.dados) ? data.dados : []);
+            } catch (erro) {
+                if (erro.name !== "AbortError") {
+                    console.error("Erro ao buscar produtos:", erro);
+                    setErro("Não foi possível carregar os produtos.");
+                    setProdutos([]);
+                }
+            } finally {
+                if (!controlador.signal.aborted) {
+                    setCarregando(false);
+                }
             }
+        }, 300);
 
-            if (ordenacao === "maior-preco") {
-                return precoB - precoA;
-            }
-
-            if (ordenacao === "nome") {
-                return (a.nome ?? "").localeCompare(b.nome ?? "");
-            }
-
-            return Number(a.id) - Number(b.id);
-        });
+        return () => {
+            clearTimeout(temporizador);
+            controlador.abort();
+        };
+    }, [pesquisa, categoriaSelecionada, ordenacao]);
 
     return (
         <main className="pagina-produtos">
@@ -100,10 +114,12 @@ export default function Produtos() {
                     </div>
 
                     <span className="produtos-quantidade">
-                        {produtosFiltrados.length}{" "}
-                        {produtosFiltrados.length === 1
-                            ? "produto encontrado"
-                            : "produtos encontrados"}
+                        <span className="produtos-quantidade">
+                            {produtos.length}{" "}
+                            {produtos.length === 1
+                                ? "produto encontrado"
+                                : "produtos encontrados"}
+                        </span>
                     </span>
                 </div>
 
@@ -155,11 +171,15 @@ export default function Produtos() {
                     </div>
                 </div>
 
-                {produtosFiltrados.length > 0 ? (
+                {carregando ? (
+                    <p>Carregando produtos...</p>
+                ) : erro ? (
+                    <p>{erro}</p>
+                ) : produtos.length > 0 ? (
                     <div className="produtos-grade">
-                        {produtosFiltrados.map((produto) => (
+                        {produtos.map((produto) => (
                             <CardProduto
-                                key={produto.id}
+                                key={produto.id_produto ?? produto.id}
                                 produto={produto}
                             />
                         ))}

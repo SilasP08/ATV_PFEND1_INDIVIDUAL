@@ -1,7 +1,8 @@
 
-import Image from "next/image";
+// import Image from "next/image";
 import Link from "next/link";
 import "./cardProduto.css";
+
 
 export default function CardProduto({ produto }) {
     return (
@@ -13,11 +14,9 @@ export default function CardProduto({ produto }) {
                     </span>
                 )}
 
-                <Image
+                <img
                     src={produto.imagem}
                     alt={produto.nome}
-                    width={300}
-                    height={260}
                     className="produto-card-foto"
                 />
             </div>
