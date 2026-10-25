@@ -24,7 +24,8 @@ const upload = multer({
     fileFilter: (_req, file, callback) => {
         if(!MIME_TYPES_VALIDOS.includes(file.mimetype)) {
             const erro = new Error("Tipo de arquivo inválido. Apenas JPEG, PNG e WEBP são permitidos.");
-            erro.name = 415; // HTTP 415 Unsupported Media Type
+            erro.status = 415; // HTTP 415 Unsupported Media Type
+            return callback(erro);
         }
         return callback(null, true);
     }
