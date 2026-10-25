@@ -655,3 +655,137 @@
     transform: translateY(0);
   }
 }
+/* =========================================================
+   MENSAGENS E AJUSTES DA INTEGRAÇÃO (login, carrinho, pedidos)
+   ========================================================= */
+.mensagem-erro,
+.mensagem-sucesso,
+.mensagem-info {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.mensagem-erro {
+  color: #ffb4b4;
+  background-color: rgba(255, 77, 77, 0.1);
+  border: 1px solid rgba(255, 77, 77, 0.4);
+}
+
+.mensagem-sucesso {
+  color: #b8f5c9;
+  background-color: rgba(46, 204, 113, 0.1);
+  border: 1px solid rgba(46, 204, 113, 0.4);
+}
+
+.mensagem-sucesso a {
+  color: var(--amarelo);
+  font-weight: 600;
+}
+
+.mensagem-info {
+  color: var(--cinza-medio);
+  background-color: var(--cinza-escuro);
+  border: 1px solid var(--borda);
+}
+
+.dica-senha {
+  display: block;
+  margin-top: -6px;
+  margin-bottom: 14px;
+  color: var(--cinza-medio);
+  font-size: 12px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Header: contador do carrinho e nome do usuário */
+.header-carrinho {
+  position: relative;
+}
+
+.carrinho-badge {
+  position: absolute;
+  top: -4px;
+  right: -10px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background-color: var(--amarelo);
+  color: var(--preto);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.perfil-container {
+  margin-left: auto;
+  gap: 16px;
+}
+
+.perfil-nome {
+  margin: 0;
+  padding: 8px 12px;
+  color: var(--cinza-medio);
+  font-size: 13px;
+  border-bottom: 1px solid var(--borda);
+}
+
+.perfil-nome strong {
+  color: var(--branco);
+}
+
+/* Carrinho: foto do produto */
+.produto-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 8px;
+  border-radius: 10px;
+}
+
+/* Pagamento: tela de pedido confirmado */
+.pedido-confirmado {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.pedido-confirmado > i {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--amarelo);
+  font-size: 56px;
+}
+
+.pedido-confirmado h1 span {
+  color: var(--amarelo);
+}
+
+.pedido-confirmado .resumo-linha,
+.pedido-confirmado .resumo-total {
+  text-align: left;
+}
+
+.pedido-confirmado-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.cep-status {
+  display: block;
+  margin-top: 4px;
+  color: var(--cinza-medio);
+  font-size: 12px;
+}

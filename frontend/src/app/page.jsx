@@ -3,19 +3,30 @@ import Link from "next/link";
 import Image from "next/image";
 import CardProduto from "@/components/cardProduto";
 import { useState, useEffect } from "react";
+import { requisicao } from "@/lib/api";
 
 
 export default function Home() {
   const [listarProdutos, setListarProdutos] = useState([])
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState("");
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/produtos?limit=10')
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        setProdutos(data.dados);
-      })
+    const controlador = new AbortController();
 
+    // etiqueta=true -> a API devolve apenas produtos com etiqueta (MAIS VENDIDO, DESTAQUE, OFERTA...)
+    requisicao('/api/produtos?etiqueta=true&limite=8', { signal: controlador.signal })
+      .then(data => {
+        setListarProdutos(Array.isArray(data.dados) ? data.dados : []);
+      })
+      .catch(erro => {
+        if (erro.name !== "AbortError") setErro(erro.message);
+      })
+      .finally(() => {
+        if (!controlador.signal.aborted) setCarregando(false);
+      });
+
+    return () => controlador.abort();
   }, [])
   return (
     <>
@@ -132,12 +143,20 @@ export default function Home() {
                 <i className="bi bi-arrow-right" />
               </Link>
             </div>
+            {carregando && <p className="mensagem-info">Carregando destaques...</p>}
+
+            {!carregando && erro && <p className="mensagem-erro">{erro}</p>}
+
+            {!carregando && !erro && listarProdutos.length === 0 && (
+              <p className="mensagem-info">Nenhum produto em destaque no momento.</p>
+            )}
+
             {listarProdutos.length > 0 &&
               <div className="products-grid">
-                {listarProdutos.map((produtos) => (
+                {listarProdutos.map((produto) => (
                   <CardProduto
-                    key={produtos.id}
-                    produto={produtos}
+                    key={produto.id}
+                    produto={produto}
                   />
                 ))}
               </div>
