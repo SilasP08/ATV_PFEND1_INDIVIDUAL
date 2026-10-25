@@ -1,6 +1,6 @@
 import express from 'express';
 import * as ProdutoController from '../controllers/ProdutoController.js';
-import { uploadImagem } from '../middlewares/UploadMiddleware.js';
+import { uploadImagem } from '../middlewares/uploadMiddleware.js';
 
 
 // Middlewares de autenticação (serão ativados na Sessão 2)
@@ -13,6 +13,7 @@ export const produtoRouter = express.Router();
 
 
 produtoRouter.get('/', ProdutoController.listar);
+produtoRouter.get('/categorias', ProdutoController.listarCategorias); // precisa vir antes de "/:id"
 produtoRouter.get('/:id', ProdutoController.buscarPorId);
 produtoRouter.post('/', (req, res, next) => autenticar(req, res, next), ProdutoController.criar);
 produtoRouter.put('/:id', (req, res, next) => autenticar(req, res, next), ProdutoController.atualizar);
