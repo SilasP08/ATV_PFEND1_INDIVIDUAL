@@ -1,33 +1,60 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import "./login.css";
+import { requisicao } from "@/lib/api";
+import { salvarSessao, estaLogado } from "@/lib/sessao";
+
+// Só aceita redirecionar para páginas do próprio site (ex.: /pagamento)
+function destinoAposLogin() {
+    const redirect = new URLSearchParams(window.location.search).get("redirect");
+    return redirect && redirect.startsWith("/") && !redirect.startsWith("//") ? redirect : "/";
+}
 
 export default function Login() {
+    const router = useRouter();
     const [mostrarSenha, setMostrarSenha] = useState(false);
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+    const [erro, setErro] = useState("");
+    const [enviando, setEnviando] = useState(false);
 
-    function autenticar(event) {
-        event.preventDefault()
+    // Quem já está logado não precisa ver a tela de login
+    useEffect(() => {
+        if (estaLogado()) router.replace(destinoAposLogin());
+    }, [router]);
 
-        fetch('http://localhost:3001/api/auth/login', {
-            method: 'post',
-            headers: {
-                'Content-type': "application/json"
-            },
-            body: JSON.stringify({ email, senha })
-        }).then(res => {
-            //ir para a home
-            if(!res.ok) throw new Error("Não autorizado")
-            
-            console.log("PASSOU")
-        }).catch(error => {
-            //exibe uma mensagem de erro
-        })
+    async function autenticar(event) {
+        event.preventDefault();
+        setErro("");
+
+        if (!email.trim() || !senha) {
+            setErro("Preencha o e-mail e a senha.");
+            return;
+        }
+
+        setEnviando(true);
+        try {
+            const resposta = await requisicao("/api/auth/login", {
+                metodo: "POST",
+                corpo: { email: email.trim(), senha },
+            });
+
+            salvarSessao(resposta.dados);
+            router.push(destinoAposLogin());
+        } catch (error) {
+            setErro(
+                error.status === 401
+                    ? "E-mail ou senha incorretos."
+                    : error.message
+            );
+        } finally {
+            setEnviando(false);
+        }
     }
-    
+
 
     return (
         <main className="auth-page">
@@ -48,7 +75,7 @@ export default function Login() {
 
                     <p>
                         Encontre os componentes eletrônicos ideais
-                        para transformar seus projetos em realidade.nhjkbhibhbnjiobniobhibiobioi
+                        para transformar seus projetos em realidade.
                     </p>
 
                     <div className="brand-decoration">
@@ -81,7 +108,13 @@ export default function Login() {
                         </p>
                     </div>
 
-                    <form className="auth-form" onSubmit={autenticar}>
+                    <form className="auth-form" onSubmit={autenticar} noValidate>
+                        {erro && (
+                            <p className="mensagem-erro" role="alert">
+                                {erro}
+                            </p>
+                        )}
+
                         <div className="form-group-custom">
                             <label htmlFor="email">E-mail</label>
                             <input type="email" id="email" className="form-control" placeholder="seuemail@exemplo.com" 
@@ -113,8 +146,8 @@ export default function Login() {
                             </a>
                         </div>
 
-                        <button type="submit" className="auth-submit">
-                            Entrar na minha conta
+                        <button type="submit" className="auth-submit" disabled={enviando}>
+                            {enviando ? "Entrando..." : "Entrar na minha conta"}
                             <span>→</span>
                         </button>
                     </form>
