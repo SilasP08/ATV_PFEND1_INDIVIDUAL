@@ -34,7 +34,8 @@ export default function Produtos() {
 
                 const parametros = new URLSearchParams();
 
-                parametros.set("limit", "10");
+                // A API aceita: limite, pesquisa, categoria e ordenacao
+                parametros.set("limite", "50");
 
                 if (pesquisa.trim() !== "") {
                     parametros.set("pesquisa", pesquisa.trim());

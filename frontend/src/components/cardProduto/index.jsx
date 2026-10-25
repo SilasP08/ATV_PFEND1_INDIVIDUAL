@@ -35,11 +35,16 @@ export default function CardProduto({ produto }) {
                 <div className="produto-card-rodape">
                     <div className="produto-card-preco">
                         <span>R$</span>
-                        <strong>{produto.preco}</strong>
+                        <strong>
+                            {Number(produto.preco).toLocaleString("pt-BR", {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                            })}
+                        </strong>
                     </div>
 
                     <Link
-                        href={`/produtos/${produto.id}`}
+                        href={`/produtos/${produto.id ?? produto.id_produto}`}
                         className="produto-card-comprar"
                         aria-label={`Ver produto ${produto.nome}`}
                     >
