@@ -5,31 +5,91 @@ import * as dbModule from '../config/database.js';
 const pool = typeof dbModule.criarPool === 'function' ? dbModule.criarPool() : dbModule.pool;
 
 
+// Exporta o pool para ser reaproveitado (ex.: transações de pedidos)
+export { pool };
+
+
+// Converte a linha do banco para o formato usado no front-end.
+// "id" é um apelido de "id_produto" para facilitar o uso nos componentes.
 function hidratarProduto(linha) {
   if (!linha) return null;
-  return { ...linha, preco: Number(linha.preco) };
+  return {
+    ...linha,
+    id: linha.id_produto,
+    preco: Number(linha.preco),
+    estoque: Number(linha.estoque)
+  };
 }
 
 
-// 1. Listagem com paginação parametrizada
-export async function listar({ limite, offset }) {
+// Ordenações permitidas (lista branca: o valor vindo da URL nunca entra direto no SQL)
+const ORDENACOES = {
+  'padrao': 'id_produto ASC',
+  'menor-preco': 'preco ASC',
+  'maior-preco': 'preco DESC',
+  'nome': 'nome ASC'
+};
+
+
+// Monta o WHERE dinamicamente, sempre com parâmetros (?) para evitar SQL Injection
+function montarFiltros({ pesquisa, categoria, etiqueta }) {
+  const condicoes = [];
+  const valores = [];
+
+  if (pesquisa) {
+    condicoes.push('(nome LIKE ? OR descricao LIKE ?)');
+    valores.push(`%${pesquisa}%`, `%${pesquisa}%`);
+  }
+
+  if (categoria) {
+    condicoes.push('categoria = ?');
+    valores.push(categoria);
+  }
+
+  if (etiqueta === true) {
+    // Apenas produtos que possuem alguma etiqueta (usado na Home)
+    condicoes.push("etiqueta IS NOT NULL AND etiqueta <> ''");
+  } else if (typeof etiqueta === 'string') {
+    condicoes.push('etiqueta = ?');
+    valores.push(etiqueta);
+  }
+
+  const where = condicoes.length > 0 ? `WHERE ${condicoes.join(' AND ')}` : '';
+  return { where, valores };
+}
+
+
+// 1. Listagem com filtros, ordenação e paginação parametrizada
+export async function listar({ limite, offset, pesquisa, categoria, etiqueta, ordenacao = 'padrao' }) {
   const limiteNum = Number.parseInt(limite, 10);
   const offsetNum = Number.parseInt(offset, 10);
+  const orderBy = ORDENACOES[ordenacao] || ORDENACOES.padrao;
+  const { where, valores } = montarFiltros({ pesquisa, categoria, etiqueta });
 
 
   const [linhas] = await pool.query(
-    'SELECT * FROM produtos ORDER BY id_produto LIMIT ? OFFSET ?',
-    [limiteNum, offsetNum]
+    `SELECT * FROM produtos ${where} ORDER BY ${orderBy} LIMIT ? OFFSET ?`,
+    [...valores, limiteNum, offsetNum]
   );
 
 
-  const [[{ total }]] = await pool.query('SELECT COUNT(*) AS total FROM produtos');
+  const [[{ total }]] = await pool.query(
+    `SELECT COUNT(*) AS total FROM produtos ${where}`,
+    valores
+  );
 
 
   return {
     produtos: linhas.map(hidratarProduto),
     total: Number(total)
   };
+}
+
+
+// Lista as categorias existentes (útil para montar os botões de filtro)
+export async function listarCategorias() {
+  const [linhas] = await pool.query('SELECT DISTINCT categoria FROM produtos ORDER BY categoria');
+  return linhas.map((linha) => linha.categoria);
 }
 
 
