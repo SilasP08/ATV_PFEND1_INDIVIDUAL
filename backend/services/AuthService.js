@@ -5,9 +5,10 @@ import * as UsuarioModel from '../models/UsuarioModel.js';
 const REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const jwtSecret = process.env.JWT_SECRET || 'chave-padrao-desenvolvimento';
 
-export async function registrar({ nome, email, senha } = {}) {
+export async function registrar({ nome, email, senha, telefone } = {}) {
   const nomeLimpo = typeof nome === 'string' ? nome.trim() : '';
   const emailLimpo = typeof email === 'string' ? email.trim().toLowerCase() : '';
+  const telefoneLimpo = typeof telefone === 'string' && telefone.trim() !== '' ? telefone.trim() : null;
 
   if (nomeLimpo.length < 3) {
     throw new TypeError('Nome deve ter no mínimo 3 caracteres.');
@@ -38,7 +39,8 @@ export async function registrar({ nome, email, senha } = {}) {
     nome: nomeLimpo,
     email: emailLimpo,
     senhaHash,
-    perfil: 'usuario'
+    telefone: telefoneLimpo,
+    perfil: 'cliente' // todo usuário cadastrado pelo site é um cliente
   });
 }
 
@@ -63,6 +65,17 @@ export async function login({ email, senha } = {}) {
     token,
     tipo: 'Bearer',
     expiraEm: '2h',
-    usuario: { id: usuario.id, nome: usuario.nome, perfil: usuario.perfil }
+    usuario: { id: usuario.id, nome: usuario.nome, email: usuario.email, perfil: usuario.perfil }
   };
+}
+
+// Retorna os dados do usuário logado (usado pelo front para validar a sessão)
+export async function perfil(idUsuario) {
+  const usuario = await UsuarioModel.buscarPorId(idUsuario);
+  if (!usuario) {
+    const erro = new Error('Usuário não encontrado.');
+    erro.status = 401;
+    throw erro;
+  }
+  return usuario;
 }

@@ -11,9 +11,25 @@ function validarId(idRecebido) {
 }
 
 
-export async function listar({ pagina = 1, limite = 10 } = {}) {
+const ORDENACOES_VALIDAS = ['padrao', 'menor-preco', 'maior-preco', 'nome'];
+
+// Limpa um texto vindo da query string (ou devolve undefined se estiver vazio)
+function textoOpcional(valor) {
+  if (typeof valor !== 'string') return undefined;
+  const limpo = valor.trim();
+  return limpo === '' ? undefined : limpo;
+}
+
+
+// Filtros aceitos na URL:
+//   ?pagina=1&limite=10 (ou limit=10)
+//   &pesquisa=arduino          -> busca no nome/descrição
+//   &categoria=Sensores        -> categoria exata
+//   &ordenacao=menor-preco     -> padrao | menor-preco | maior-preco | nome
+//   &etiqueta=true             -> só produtos com etiqueta (ou etiqueta=OFERTA para uma específica)
+export async function listar({ pagina = 1, limite, limit, pesquisa, categoria, ordenacao, etiqueta } = {}) {
   const paginaNum = Number(pagina);
-  const limiteNum = Number(limite);
+  const limiteNum = Number(limite ?? limit ?? 10);
 
 
   if (!Number.isInteger(paginaNum) || paginaNum <= 0) {
@@ -23,9 +39,37 @@ export async function listar({ pagina = 1, limite = 10 } = {}) {
     throw new TypeError('Limite deve ser um inteiro entre 1 e 100.');
   }
 
+  const ordenacaoLimpa = textoOpcional(ordenacao) || 'padrao';
+  if (!ORDENACOES_VALIDAS.includes(ordenacaoLimpa)) {
+    throw new TypeError(`Ordenação inválida. Use: ${ORDENACOES_VALIDAS.join(', ')}.`);
+  }
+
+  const pesquisaLimpa = textoOpcional(pesquisa);
+  if (pesquisaLimpa && pesquisaLimpa.length > 100) {
+    throw new TypeError('A pesquisa deve ter no máximo 100 caracteres.');
+  }
+
+  const categoriaLimpa = textoOpcional(categoria);
+  const categoriaFinal = categoriaLimpa && categoriaLimpa.toLowerCase() !== 'todas' ? categoriaLimpa : undefined;
+
+  let etiquetaFinal;
+  const etiquetaLimpa = textoOpcional(etiqueta);
+  if (etiquetaLimpa === 'true' || etiquetaLimpa === '1') {
+    etiquetaFinal = true;
+  } else if (etiquetaLimpa && etiquetaLimpa !== 'false' && etiquetaLimpa !== '0') {
+    etiquetaFinal = etiquetaLimpa.toUpperCase();
+  }
+
 
   const offset = (paginaNum - 1) * limiteNum;
-  const { produtos, total } = await ProdutoModel.listar({ limite: limiteNum, offset });
+  const { produtos, total } = await ProdutoModel.listar({
+    limite: limiteNum,
+    offset,
+    pesquisa: pesquisaLimpa,
+    categoria: categoriaFinal,
+    etiqueta: etiquetaFinal,
+    ordenacao: ordenacaoLimpa
+  });
 
 
   return {
@@ -37,6 +81,11 @@ export async function listar({ pagina = 1, limite = 10 } = {}) {
       totalPaginas: Math.ceil(total / limiteNum)
     }
   };
+}
+
+
+export async function listarCategorias() {
+  return await ProdutoModel.listarCategorias();
 }
 
 
