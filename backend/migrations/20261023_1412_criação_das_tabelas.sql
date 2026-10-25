@@ -1,3 +1,5 @@
+use loja_eletric;
+
 CREATE TABLE produtos (
     id_produto INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(150) NOT NULL,
