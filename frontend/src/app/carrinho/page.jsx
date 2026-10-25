@@ -1,81 +1,71 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import "./carrinho.css";
-
-const produtosIniciais = [
-    {
-        id: 1,
-        nome: "Arduino Uno R3",
-        categoria: "Placas e microcontroladores",
-        preco: 89.90,
-        quantidade: 1,
-        simbolo: "⌘",
-    },
-    {
-        id: 2,
-        nome: "Kit Resistor 1/4W",
-        categoria: "Componentes eletrônicos",
-        preco: 24.90,
-        quantidade: 2,
-        simbolo: "▤",
-    },
-    {
-        id: 3,
-        nome: "Protoboard 830 pontos",
-        categoria: "Prototipagem",
-        preco: 32.50,
-        quantidade: 1,
-        simbolo: "▦",
-    },
-];
+import { formatarPreco } from "@/lib/api";
+import { estaLogado } from "@/lib/sessao";
+import {
+    obterCarrinho,
+    alterarQuantidade as alterarQuantidadeCarrinho,
+    removerDoCarrinho,
+    limparCarrinho as limparCarrinhoSalvo,
+    calcularResumo,
+    FRETE_GRATIS_A_PARTIR_DE,
+    EVENTO_CARRINHO,
+} from "@/lib/carrinho";
 
 export default function Carrinho() {
-    const [produtos, setProdutos] = useState(produtosIniciais);
+    const router = useRouter();
+    const [produtos, setProdutos] = useState([]);
+    const [carregado, setCarregado] = useState(false);
 
-    const quantidadeTotal = produtos.reduce(
-        (total, produto) => total + produto.quantidade,
-        0
-    );
+    // Lê o carrinho salvo no navegador e acompanha mudanças (ex.: outra aba)
+    useEffect(() => {
+        function atualizar() {
+            setProdutos(obterCarrinho());
+        }
+        atualizar();
+        setCarregado(true);
 
-    const subtotal = produtos.reduce(
-        (total, produto) =>
-            total + produto.preco * produto.quantidade,
-        0
-    );
+        window.addEventListener(EVENTO_CARRINHO, atualizar);
+        window.addEventListener("storage", atualizar);
+        return () => {
+            window.removeEventListener(EVENTO_CARRINHO, atualizar);
+            window.removeEventListener("storage", atualizar);
+        };
+    }, []);
 
-    const frete = subtotal === 0 || subtotal >= 250 ? 0 : 15.90;
-    const total = subtotal + frete;
+    const { quantidadeTotal, subtotal, frete, total } = calcularResumo(produtos);
 
     function alterarQuantidade(id, variacao) {
-        setProdutos((listaAtual) =>
-            listaAtual.map((produto) =>
-                produto.id === id
-                    ? {...produto, quantidade: Math.max(1, produto.quantidade + variacao)}
-                    : produto
-            )
-        );
+        const item = produtos.find((produto) => produto.id === id);
+        if (!item) return;
+        setProdutos(alterarQuantidadeCarrinho(id, item.quantidade + variacao));
     }
 
     function removerProduto(id) {
-        setProdutos((listaAtual) =>
-            listaAtual.filter((produto) => produto.id !== id)
-        );
+        setProdutos(removerDoCarrinho(id));
     }
 
     function limparCarrinho() {
-        setProdutos([]);
+        setProdutos(limparCarrinhoSalvo());
     }
-    
-    function formatarPreco(valor) {
-        return valor.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-        });
+
+    function finalizarCompra() {
+        // Para comprar é preciso estar logado; depois do login volta para o pagamento
+        if (!estaLogado()) {
+            router.push("/login?redirect=/pagamento");
+            return;
+        }
+        router.push("/pagamento");
     }
-    
+
+    if (!carregado) {
+        return <main className="carrinho-page" />;
+    }
 
     return (
         <main className="carrinho-page">
@@ -135,7 +125,11 @@ export default function Carrinho() {
                                         key={produto.id}
                                     >
                                         <div className="produto-visual">
-                                            <span>{produto.simbolo}</span>
+                                            {produto.imagem ? (
+                                                <img src={produto.imagem} alt={produto.nome} />
+                                            ) : (
+                                                <span>⌘</span>
+                                            )}
                                         </div>
 
                                         <div className="produto-info">
@@ -188,6 +182,7 @@ export default function Carrinho() {
                                                 <button
                                                     type="button"
                                                     aria-label={`Aumentar quantidade de ${produto.nome}`}
+                                                    disabled={Number.isFinite(produto.estoque) && produto.quantidade >= produto.estoque}
                                                     onClick={() =>
                                                         alterarQuantidade(
                                                             produto.id,
@@ -263,14 +258,14 @@ export default function Carrinho() {
                                     </strong>
                                 </div>
 
-                                {subtotal > 0 && subtotal < 250 && (
+                                {subtotal > 0 && subtotal < FRETE_GRATIS_A_PARTIR_DE && (
                                     <p className="aviso-frete">
-                                        Faltam {formatarPreco(250 - subtotal)}
+                                        Faltam {formatarPreco(FRETE_GRATIS_A_PARTIR_DE - subtotal)}
                                         {" "}para obter frete grátis.
                                     </p>
                                 )}
 
-                                {subtotal >= 250 && (
+                                {subtotal >= FRETE_GRATIS_A_PARTIR_DE && (
                                     <p className="aviso-frete">
                                         Você ganhou frete grátis!
                                     </p>
@@ -290,11 +285,7 @@ export default function Carrinho() {
                                 <button
                                     type="button"
                                     className="finalizar-compra"
-                                    onClick={() =>
-                                        alert(
-                                            "A finalização da compra será implementada na próxima etapa."
-                                        )
-                                    }
+                                    onClick={finalizarCompra}
                                 >
                                     Finalizar compra
                                     <span>→</span>
@@ -303,7 +294,7 @@ export default function Carrinho() {
                                 <div className="compra-segura">
                                     <span>✓</span>
                                     <p>
-                                        Sua próxima etapa de compra começa aqui.
+                                        Você precisa estar logado para finalizar a compra.
                                     </p>
                                 </div>
                             </div>
