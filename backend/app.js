@@ -3,8 +3,9 @@ import helmet from 'helmet';
 import cors from 'cors';
 import { resolve } from 'node:path';
 
-import { produtoRouter, configurarSegurancaProdutos } from './routes/ProdutoRoutes.js';
+import { produtoRouter, configurarSegurancaProdutos } from './routes/produtoRoutes.js';
 import { authRouter } from './routes/AuthRoutes.js';
+import { pedidoRouter } from './routes/PedidoRoutes.js';
 import { autenticar, autorizarAdmin } from './middlewares/AuthMiddleware.js';
 
 export const app = express();
@@ -37,6 +38,7 @@ configurarSegurancaProdutos(autenticar, autorizarAdmin);
 // 3. Rotas da API
 app.get('/api/check', (_req, res) => res.status(200).json({ status: 'ok' }));
 app.use('/api/produtos', produtoRouter);
+app.use('/api/pedidos', pedidoRouter);
 
 // 4. Fallback 404
 app.use((req, res) => {
