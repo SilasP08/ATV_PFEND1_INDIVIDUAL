@@ -26,6 +26,16 @@ export async function listar(req, res, next) {
 }
 
 
+export async function listarCategorias(_req, res, next) {
+  try {
+    const categorias = await ProdutoService.listarCategorias();
+    return res.status(200).json({ sucesso: true, dados: categorias });
+  } catch (erro) {
+    return responderErro(erro, res, next);
+  }
+}
+
+
 export async function buscarPorId(req, res, next) {
   try {
     const produto = await ProdutoService.buscarPorId(req.params.id);

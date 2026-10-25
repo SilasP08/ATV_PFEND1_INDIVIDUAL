@@ -22,6 +22,15 @@ export async function registrar(req, res, next) {
   }
 }
 
+export async function perfil(req, res, next) {
+  try {
+    const usuario = await AuthService.perfil(req.usuario.id);
+    return res.status(200).json({ sucesso: true, dados: usuario });
+  } catch (erro) {
+    return responderErro(erro, res, next);
+  }
+}
+
 export async function login(req, res, next) {
   try {
     const sessao = await AuthService.login(req.body);
