@@ -35,38 +35,23 @@ export default function Footer() {
 
                         <ul className="footer-links">
                             <li>
-                                <a href="index.php">
+                                <Link href="/">
                                     <i className="bi bi-house-door"></i>
                                     Início
-                                </a>
+                                </Link>
                             </li>
 
                             <li>
-                                <a href="produtos.php">
+                                <Link href="/produtos">
                                     <i className="bi bi-cpu"></i>
                                     Produtos
-                                </a>
+                                </Link>
                             </li>
-
                             <li>
-                                <a href="categorias.php">
-                                    <i className="bi bi-grid"></i>
-                                    Categorias
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="ofertas.php">
-                                    <i className="bi bi-tag"></i>
-                                    Ofertas
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="minha-conta.php">
-                                    <i className="bi bi-person"></i>
-                                    Minha conta
-                                </a>
+                                <Link href="/sobre">
+                                    <i className="bi bi-cpu"></i>
+                                    Sobre Nós
+                                </Link>
                             </li>
                         </ul>
                     </div>
