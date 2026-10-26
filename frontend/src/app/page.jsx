@@ -78,10 +78,10 @@ export default function Home() {
             <div className="hero-image-glow" />
 
             <Image
-              src="/imagens/hero-eletronica.png"
+              src="/image/img_home.png"
               alt="Componentes eletrônicos e placas de desenvolvimento"
-              width={650}
-              height={550}
+              width={300}
+              height={150}
               priority
               className="hero-product-image"
             />
