@@ -120,6 +120,10 @@
     font-size: 13px;
 }
 
+.bi-x-circle-fill {
+    color: red;
+}
+
 .detalhe-descricao {
     margin: 25px 0;
     color: var(--cinza-medio);

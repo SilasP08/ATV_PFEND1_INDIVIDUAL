@@ -150,8 +150,8 @@ export default function DetalheProduto() {
                                 </>
                             ) : (
                                 <>
-                                    <i className="bi bi-x-circle-fill"></i>
-                                    Produto esgotado
+                                    <i className="bi bi-x-circle-fill"> Produto esgotado</i>
+                                    
                                 </>
                             )}
                         </div>
