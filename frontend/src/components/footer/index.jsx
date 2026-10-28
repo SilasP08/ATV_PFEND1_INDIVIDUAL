@@ -11,7 +11,7 @@ export default function Footer() {
 
                     <div className="footer-about">
                         <a href="index.php" className="logo-footer">
-                            ELETRO<span>TECH</span>
+                            HOUSE<span>ELECTRIC</span>
                         </a>
 
                         <p className="slogan-footer">
